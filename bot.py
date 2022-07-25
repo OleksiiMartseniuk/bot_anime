@@ -7,7 +7,6 @@ from aiogram.types import BotCommand
 
 from app.handlers.schedules import register_handlers_schedules
 from app.handlers.common import register_handlers_common
-from app.handlers.menu import register_handlers_menu
 
 from settings import TOKEN_BOT
 
@@ -37,8 +36,6 @@ async def main():
 
     register_handlers_schedules(dp)
     register_handlers_common(dp)
-    register_handlers_menu(dp)
-
     await set_commands(bot)
 
     await dp.skip_updates()
