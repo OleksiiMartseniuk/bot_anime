@@ -55,12 +55,15 @@ async def anime_chosen(message: types.Message, state: FSMContext):
                 day = day_week
 
     await message.answer(day.value)
-    for item in data['results']:
-        await message.answer(
-            card(item, schedules=True),
-            reply_markup=types.ReplyKeyboardRemove(),
-            parse_mode=types.ParseMode.HTML
-        )
+    if data:
+        for item in data['results']:
+            await message.answer(
+                card(item, schedules=True),
+                reply_markup=types.ReplyKeyboardRemove(),
+                parse_mode=types.ParseMode.HTML
+            )
+    else:
+        await message.answer('Что-то пошло не так!!!')
     # Сбросит состояние и хранящиеся данные
     await state.finish()
 
