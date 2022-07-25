@@ -1,6 +1,14 @@
+from enum import Enum
 from datetime import datetime
 
 import aiogram.utils.markdown as fmt
+
+
+class ExtendedEnum(Enum):
+
+    @classmethod
+    def list(cls):
+        return list(map(lambda c: c.value, cls))
 
 
 def card(data: dict, schedules: bool = False) -> str:
