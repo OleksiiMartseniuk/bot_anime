@@ -26,3 +26,12 @@ class ApiClient:
         """Получения аниме по дню недели"""
         params = {'day_week': day}
         return await self._get(self.api_url, params)
+
+    async def get_genre(self):
+        """Жанры"""
+        url = self.api_url + 'genre/'
+        return await self._get(url)
+
+    async def get_filter_genre(self, title: str):
+        params = {'genre': title}
+        return await self._get(self.api_url, params)
