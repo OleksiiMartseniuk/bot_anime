@@ -1,3 +1,5 @@
+import logging
+
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 
@@ -7,6 +9,7 @@ from service.api import ApiClient
 from service.service import card, Week
 from ..states.schedules import WeekDay
 
+logger = logging.getLogger(__name__)
 
 available_anime = ['текущий день'] + [day.value for day in Week]
 
@@ -28,6 +31,9 @@ async def anime_chosen(message: types.Message, state: FSMContext):
         )
         return
 
+    logger.info(f'Пользователь [{message.from_user.id}]  '
+                f'выбрал действия [{message.text.lower()}]')
+
     if message.text.lower() == available_anime[0]:
         day = list(Week)[datetime.weekday(datetime.now())]
         data = await ApiClient().get_anime_day(day.name)
@@ -46,6 +52,8 @@ async def anime_chosen(message: types.Message, state: FSMContext):
                 parse_mode=types.ParseMode.HTML
             )
     else:
+        logger.error(f'Данные с сервера неверны запрос '
+                     f'get_anime_day[{day.name}]')
         await message.answer('Что-то пошло не так!!!')
     # Сбросит состояние и хранящиеся данные
     await state.finish()
