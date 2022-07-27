@@ -46,8 +46,9 @@ async def anime_chosen(message: types.Message, state: FSMContext):
     await message.answer(day.value)
     if data:
         for item in data['results']:
-            await message.answer(
-                card(item),
+            await message.answer_photo(
+                item['url_image_preview'],
+                caption=card(item),
                 reply_markup=types.ReplyKeyboardRemove(),
                 parse_mode=types.ParseMode.HTML
             )
