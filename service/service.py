@@ -1,8 +1,6 @@
 from enum import Enum
 from datetime import datetime
 
-import aiogram.utils.markdown as fmt
-
 
 class Week(Enum):
     monday = 'понедельник'
@@ -21,9 +19,8 @@ def card(data: dict) -> str:
         date_time = date_time.strftime('%H:%M')
     else:
         date_time = 'В течении дня'
-    return f"{fmt.hide_link(data['url_image_preview'])} " \
-           f"<b>{data['title'].split('/')[0]}</b> \n\n" \
-           f"Время выхода ~({date_time}) \n" \
-           f"Рейтинг {data['rating']}\n" \
-           f"Голоса {data['votes']}\n" \
+    return f"<b>{data['title'].split('/')[0]}</b> \n\n" \
+           f"<b>Время выхода</b> 🕜️ ({date_time}) \n" \
+           f"<b>Рейтинг</b> 📊 {data['rating']}\n" \
+           f"<b>Голоса</b> 🗳️ {data['votes']}\n" \
            f"<a href='{data['link']}'>Смотреть на animevost.org</a>"
