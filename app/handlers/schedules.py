@@ -43,19 +43,21 @@ async def anime_chosen(message: types.Message, state: FSMContext):
                 data = await ApiClient().get_anime_day(day_week.name)
                 day = day_week
 
-    await message.answer(day.value)
-    if data:
-        for item in data['results']:
-            await message.answer_photo(
-                item['url_image_preview'],
-                caption=card(item),
-                reply_markup=types.ReplyKeyboardRemove(),
-                parse_mode=types.ParseMode.HTML
-            )
-    else:
+    if not data:
         logger.error(f'Данные с сервера неверны запрос '
                      f'get_anime_day[{day.name}]')
         await message.answer('Что-то пошло не так!!!')
+        return
+
+    await message.answer(f"{day.value}\n"
+                         f"количество: {data['count']} аниме")
+    for item in data['results']:
+        await message.answer_photo(
+            item['url_image_preview'],
+            caption=card(item),
+            reply_markup=types.ReplyKeyboardRemove(),
+            parse_mode=types.ParseMode.HTML
+        )
     # Сбросит состояние и хранящиеся данные
     await state.finish()
 
