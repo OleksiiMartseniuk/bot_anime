@@ -26,6 +26,7 @@ async def result_search(message: types.Message, state: FSMContext):
         await message.answer('Что-то пошло не так!!!')
         logger.error(f'Данные с сервера неверны запрос '
                      f'[search({message.text.lower()})]')
+        await state.finish()
         return
 
     if data['count'] == 0:
@@ -56,4 +57,3 @@ def register_handlers_search(dp: Dispatcher):
         result_search,
         state=SearchName.waiting_for_name
     )
-    
