@@ -41,3 +41,8 @@ class ApiClient:
         """Количество аниме"""
         result = await self._get(self.api_url)
         return result.get('count')
+
+    async def search(self, q: str) -> dict | None:
+        """Поиск по названию"""
+        params = {'search': q}
+        return await self._get(self.api_url, params)
