@@ -49,8 +49,11 @@ async def anime_chosen(message: types.Message, state: FSMContext):
         await message.answer('Что-то пошло не так!!!')
         return
 
-    await message.answer(f"{day.value}\n"
-                         f"количество: {data['count']} аниме")
+    await message.answer(
+        f"<b>{day.value}</b>\n"
+        f"<b>количество</b>: \t {data['count']} аниме",
+        parse_mode=types.ParseMode.HTML
+    )
     for item in data['results']:
         await message.answer_photo(
             item['url_image_preview'],
