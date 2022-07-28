@@ -65,7 +65,7 @@ async def anime_chosen(message: types.Message, state: FSMContext):
 def register_handlers_schedules(dp: Dispatcher):
     dp.register_message_handler(
         anime_start,
-        commands="anime_schedules",
+        commands="schedules",
         state="*"
     )
     dp.register_message_handler(

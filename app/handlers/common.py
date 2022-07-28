@@ -6,7 +6,9 @@ from aiogram.dispatcher.filters import Text
 async def cmd_start(message: types.Message, state: FSMContext):
     await state.finish()
     await message.answer(
-        "Выберите, действия:  расписания (/anime_schedules)",
+        "Выберите, действия:\n"
+        "расписания (/schedules)\n"
+        "анонс (/anons)",
         reply_markup=types.ReplyKeyboardRemove()
     )
 

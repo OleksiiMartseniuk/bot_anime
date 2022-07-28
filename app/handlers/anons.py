@@ -36,6 +36,6 @@ async def anons_start(message: types.Message):
 def register_handlers_anons(dp: Dispatcher):
     dp.register_message_handler(
         anons_start,
-        commands="anime_anons",
+        commands="anons",
         state="*"
     )
