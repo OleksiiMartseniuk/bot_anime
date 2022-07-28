@@ -12,15 +12,16 @@ class Week(Enum):
     sunday = 'воскресенье'
 
 
-def card(data: dict) -> str:
+def card(data: dict, schedules: bool = False) -> str:
     """Вывод аниме"""
     if data['timer']:
         date_time = datetime.fromtimestamp(data['timer'])
         date_time = date_time.strftime('%H:%M')
     else:
         date_time = 'В течении дня'
+    time = f'<b>Время выхода</b> 🕜️ ({date_time}) \n' if schedules else ''
     return f"<b>{data['title'].split('/')[0]}</b> \n\n" \
-           f"<b>Время выхода</b> 🕜️ ({date_time}) \n" \
+           f"{time}" \
            f"<b>Рейтинг</b> 📊 {data['rating']}\n" \
            f"<b>Голоса</b> 🗳️ {data['votes']}\n" \
            f"<a href='{data['link']}'>Смотреть на animevost.org</a>"

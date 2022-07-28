@@ -54,7 +54,7 @@ async def anime_chosen(message: types.Message, state: FSMContext):
     for item in data['results']:
         await message.answer_photo(
             item['url_image_preview'],
-            caption=card(item),
+            caption=card(item, schedules=True),
             reply_markup=types.ReplyKeyboardRemove(),
             parse_mode=types.ParseMode.HTML
         )
