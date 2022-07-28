@@ -8,6 +8,7 @@ from aiogram.types import BotCommand
 from app.handlers.schedules import register_handlers_schedules
 from app.handlers.anons import register_handlers_anons
 from app.handlers.common import register_handlers_common
+from app.handlers.search import register_handlers_search
 
 from settings import TOKEN_BOT
 
@@ -19,6 +20,7 @@ async def set_commands(bot: Bot):
     """Команды бота"""
     commands = [
         BotCommand(command="/schedules", description="Расписания"),
+        BotCommand(command="/search", description="Поиск"),
         BotCommand(command="/anons", description="Анонс"),
         BotCommand(command="/cancel", description="Отменить текущее действие")
     ]
@@ -38,6 +40,7 @@ async def main():
     register_handlers_schedules(dp)
     register_handlers_common(dp)
     register_handlers_anons(dp)
+    register_handlers_search(dp)
 
     await set_commands(bot)
 
