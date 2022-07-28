@@ -8,7 +8,8 @@ async def cmd_start(message: types.Message, state: FSMContext):
     await message.answer(
         "Выберите, действия:\n"
         "расписания (/schedules)\n"
-        "анонс (/anons)",
+        "анонс (/anons)\n"
+        "поиск (/search)\n",
         reply_markup=types.ReplyKeyboardRemove()
     )
 
