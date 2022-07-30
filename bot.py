@@ -11,7 +11,7 @@ from app.handlers.common import register_handlers_common
 from app.handlers.search import register_handlers_search
 from app.handlers.filter_genre import register_handlers_filter_genre
 
-from settings import TOKEN_BOT
+from config.settings import TOKEN_BOT
 
 
 logger = logging.getLogger(__name__)
