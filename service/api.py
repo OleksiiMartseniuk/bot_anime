@@ -1,13 +1,14 @@
 import httpx
 import logging
 
+from config.settings import API_URL
 
 logger = logging.getLogger(__name__)
 
 
 class ApiClient:
     def __init__(self):
-        self.api_url = 'http://localhost/v1/anime/'
+        self.api_url = API_URL
 
     async def _get(self, url: str, params: dict = {}) -> dict | None:
         async with httpx.AsyncClient() as client:
