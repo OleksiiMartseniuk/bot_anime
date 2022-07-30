@@ -32,9 +32,9 @@ class ApiClient:
         url = self.api_url + 'genre/'
         return await self._get(url)
 
-    async def get_filter_genre(self, title: str) -> dict | None:
+    async def get_filter_genre(self, title: str, page: int = 1) -> dict | None:
         """Фильтр по жанрам"""
-        params = {'genre': title}
+        params = {'genre': title, 'page': page}
         return await self._get(self.api_url, params)
 
     async def get_count_anime(self) -> int | None:
