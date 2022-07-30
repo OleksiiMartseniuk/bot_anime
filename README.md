@@ -18,4 +18,4 @@ Create a file at the root of the project `.env`
 
 ```
 export TOKEN_BOT='you_token'
-```edit
+```
