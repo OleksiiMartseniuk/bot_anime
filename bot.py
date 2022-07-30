@@ -23,6 +23,7 @@ async def set_commands(bot: Bot):
         BotCommand(command="/schedules", description="Расписания"),
         BotCommand(command="/search", description="Поиск"),
         BotCommand(command="/anons", description="Анонс"),
+        BotCommand(command="/filter_genre", description="Фильтр по жанрам"),
         BotCommand(command="/cancel", description="Отменить текущее действие")
     ]
     await bot.set_my_commands(commands)
