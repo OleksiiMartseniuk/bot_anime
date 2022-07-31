@@ -73,6 +73,7 @@ async def filter_genre_result(message: types.Message, state: FSMContext):
 
 
 async def pagination(message: types.Message, state: FSMContext):
+    """Пагинация по страницам"""
     if message.text.lower() == 'показать страницу':
         user_data = await state.get_data()
 

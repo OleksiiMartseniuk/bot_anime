@@ -17,6 +17,7 @@ async def search_start(message: types.Message):
 
 
 async def result_search(message: types.Message, state: FSMContext):
+    """Результат поиска"""
     data = await ApiClient().search(message.text.lower())
 
     logger.info(f'Пользователь [{message.from_user.id}]  '
