@@ -7,25 +7,24 @@ from datetime import datetime
 
 from service.api import ApiClient
 from service.service import card, Week
+
 from ..states.schedules import WeekDay
+from ..keyboards import reply
+
 
 logger = logging.getLogger(__name__)
-
-available_anime = ['текущий день'] + [day.value for day in Week]
 
 
 async def anime_start(message: types.Message):
     """Выбор действия"""
-    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    for name in available_anime:
-        keyboard.add(name)
+    keyboard = reply.get_schedules()
     await message.answer('Выберите день:', reply_markup=keyboard)
     await WeekDay.waiting_for_day.set()
 
 
 async def anime_chosen(message: types.Message, state: FSMContext):
     """Вывод расписания"""
-    if message.text.lower() not in available_anime:
+    if message.text.lower() not in reply.available_anime:
         await message.answer(
             "Пожалуйста, выберите действия, используя клавиатуру ниже."
         )
@@ -34,7 +33,7 @@ async def anime_chosen(message: types.Message, state: FSMContext):
     logger.info(f'Пользователь [{message.from_user.id}]  '
                 f'выбрал действия [{message.text.lower()}]')
 
-    if message.text.lower() == available_anime[0]:
+    if message.text.lower() == reply.available_anime[0]:
         day = list(Week)[datetime.weekday(datetime.now())]
         data = await ApiClient().get_anime_day(day.name)
     else:
@@ -50,8 +49,8 @@ async def anime_chosen(message: types.Message, state: FSMContext):
         return
 
     await message.answer(
-        f"<b>{day.value}</b>\n"
-        f"<b>количество</b>: \t {data['count']} аниме",
+        f"<b>{day.value.title()}</b>\n"
+        f"<b>Количество</b>: \t {data['count']} аниме",
         parse_mode=types.ParseMode.HTML
     )
     for item in data['results']:

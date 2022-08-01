@@ -1,5 +1,10 @@
 from aiogram.types import ReplyKeyboardMarkup
 
+from service.service import Week
+
+
+available_anime = ['текущий день'] + [day.value for day in Week]
+
 
 def get_genre(genre_list: list) -> ReplyKeyboardMarkup:
     """Жанры"""
@@ -14,4 +19,12 @@ def get_pagination() -> ReplyKeyboardMarkup:
     keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
     keyboard.add('Показать страницу')
     keyboard.add('Отмена')
+    return keyboard
+
+
+def get_schedules() -> ReplyKeyboardMarkup:
+    """Расписания"""
+    keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
+    for name in available_anime:
+        keyboard.add(name)
     return keyboard
