@@ -1,11 +1,13 @@
 import logging
-import math
+
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 
 from service.api import ApiClient
 from service.service import card, get_page_list
+
 from ..states.search import SearchName
+from ..keyboards import reply
 
 
 logger = logging.getLogger(__name__)
@@ -46,9 +48,7 @@ async def result_search(message: types.Message, state: FSMContext):
     await state.update_data(page_list=page_list, search=search)
     await SearchName.next()
 
-    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    keyboard.add('Показать страницу')
-    keyboard.add('Отмена')
+    keyboard = reply.get_pagination()
     await message.answer('Выберете действия:', reply_markup=keyboard)
 
 

@@ -1,5 +1,4 @@
 import logging
-import math
 
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
@@ -7,6 +6,7 @@ from aiogram.dispatcher import FSMContext
 from service.api import ApiClient
 from service.service import card, get_page_list
 
+from ..keyboards import reply
 from ..states.filter_genre import FilterGenre
 
 
@@ -25,9 +25,7 @@ async def filter_genre_start(message: types.Message):
         logger.error(f'Данные с сервера неверны запрос [get_genre]')
         return
 
-    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    for item in data:
-        keyboard.add(item['title'])
+    keyboard = reply.get_genre(data)
     await message.answer('Выберите жанр:', reply_markup=keyboard)
     await FilterGenre.waiting_for_genre.set()
 
@@ -65,9 +63,7 @@ async def filter_genre_result(message: types.Message, state: FSMContext):
     await state.update_data(page_list=page_list, genre=genre)
     await FilterGenre.next()
 
-    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    keyboard.add('Показать страницу')
-    keyboard.add('Отмена')
+    keyboard = reply.get_pagination()
     await message.answer('Выберете действия:', reply_markup=keyboard)
 
 
