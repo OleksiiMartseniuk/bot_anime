@@ -28,7 +28,7 @@ class ApiClient:
         params = {'day_week': day}
         return await self._get(self.api_url, params)
 
-    async def get_genre(self) -> dict | None:
+    async def get_genre(self) -> list | None:
         """Жанры"""
         url = self.api_url + 'genre/'
         return await self._get(url)
