@@ -1,3 +1,7 @@
+import math
+
+from typing import List
+
 from enum import Enum
 from datetime import datetime
 
@@ -27,3 +31,9 @@ def card(data: dict, schedules: bool = False) -> str:
            f"<b>Рейтинг</b> 📊 {data['rating']}\n" \
            f"<b>Голоса</b> 🗳️ {data['votes']}\n" \
            f"<a href='{data['link']}'>Смотреть на animevost.org</a>"
+
+
+def get_page_list(page_count: int) -> List[int]:
+    """Получения списка страниц"""
+    count = page_count / 20
+    return [x for x in reversed(range(1, math.ceil(count) + 1))]
