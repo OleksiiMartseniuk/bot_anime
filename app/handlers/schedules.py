@@ -50,7 +50,7 @@ async def anime_chosen(message: types.Message, state: FSMContext):
 
     await message.answer(
         f"<b>{day.value.title()}</b>\n"
-        f"<b>Количество</b>: \t <b>{data['count']}</b> \t <b>аниме</b>",
+        f"<b>Количество</b>: \t {data['count']} аниме",
         parse_mode=types.ParseMode.HTML
     )
     for item in data['results']:
