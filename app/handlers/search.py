@@ -1,9 +1,10 @@
 import logging
+import math
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 
 from service.api import ApiClient
-from service.service import card
+from service.service import card, get_page_list
 from ..states.search import SearchName
 
 
@@ -39,13 +40,44 @@ async def result_search(message: types.Message, state: FSMContext):
         f"<b>Найдено</b>: \t {data['count']} аниме",
         parse_mode=types.ParseMode.HTML,
     )
-    for item in data['results']:
-        await message.answer_photo(
-            item['url_image_preview'],
-            caption=card(item),
-            parse_mode=types.ParseMode.HTML
-        )
-    await state.finish()
+
+    page_list = get_page_list(data['count'])
+    search = message.text.lower()
+    await state.update_data(page_list=page_list, search=search)
+    await SearchName.next()
+
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    keyboard.add('Показать страницу')
+    keyboard.add('Отмена')
+    await message.answer('Выберете действия:', reply_markup=keyboard)
+
+
+async def pagination_search(message: types.Message, state: FSMContext):
+    """Пагинация по страницам"""
+    if message.text.lower() == 'показать страницу':
+        user_data = await state.get_data()
+
+        if user_data['page_list']:
+            data = await ApiClient().search(
+                user_data['search'],
+                user_data['page_list'][-1]
+            )
+            for item in data['results']:
+                await message.answer_photo(
+                    item['url_image_preview'],
+                    caption=card(item),
+                    parse_mode=types.ParseMode.HTML
+                )
+
+            user_data['page_list'].pop()
+            if not user_data['page_list']:
+                await message.answer(
+                    '🔚',
+                    reply_markup=types.ReplyKeyboardRemove()
+                )
+                await state.finish()
+                return
+            await state.update_data(page_list=user_data['page_list'])
 
 
 def register_handlers_search(dp: Dispatcher):
@@ -57,4 +89,8 @@ def register_handlers_search(dp: Dispatcher):
     dp.register_message_handler(
         result_search,
         state=SearchName.waiting_for_name
+    )
+    dp.register_message_handler(
+        pagination_search,
+        state=SearchName.waiting_for_page
     )
