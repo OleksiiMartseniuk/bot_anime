@@ -72,7 +72,7 @@ async def filter_genre_result(message: types.Message, state: FSMContext):
     await message.answer('Выберете действия:', reply_markup=keyboard)
 
 
-async def pagination(message: types.Message, state: FSMContext):
+async def pagination_filter(message: types.Message, state: FSMContext):
     """Пагинация по страницам"""
     if message.text.lower() == 'показать страницу':
         user_data = await state.get_data()
@@ -111,6 +111,6 @@ def register_handlers_filter_genre(dp: Dispatcher):
         state=FilterGenre.waiting_for_genre
     )
     dp.register_message_handler(
-        pagination,
+        pagination_filter,
         state=FilterGenre.waiting_for_page
     )
