@@ -5,7 +5,7 @@ from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 
 from service.api import ApiClient
-from service.service import card
+from service.service import card, get_page_list
 
 from ..states.filter_genre import FilterGenre
 
@@ -60,8 +60,7 @@ async def filter_genre_result(message: types.Message, state: FSMContext):
         reply_markup=types.ReplyKeyboardRemove()
     )
 
-    count = data_anime['count'] / 20
-    page_list = [x for x in reversed(range(1, math.ceil(count) + 1))]
+    page_list = get_page_list(data_anime['count'])
     genre = message.text.lower()
     await state.update_data(page_list=page_list, genre=genre)
     await FilterGenre.next()
