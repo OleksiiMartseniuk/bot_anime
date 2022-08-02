@@ -1,6 +1,8 @@
 import logging
 from aiogram import Dispatcher, types
 
+from database.db import DataBaseClient
+
 from service.api import ApiClient
 from service.service import card
 
@@ -19,6 +21,13 @@ async def anons_start(message: types.Message):
         logger.error(f'Данные с сервера неверны запрос [get_anons]')
         await message.answer('Что-то пошло не так!!!')
         return
+
+    # Запись статистики
+    await DataBaseClient().set_statistics(
+        message.from_user.id,
+        'anons',
+        'Получения анонсов'
+    )
 
     await message.answer(
         f"<b>Анонс</b> \n"

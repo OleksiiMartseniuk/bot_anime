@@ -5,6 +5,8 @@ from aiogram.dispatcher import FSMContext
 
 from datetime import datetime
 
+from database.db import DataBaseClient
+
 from service.api import ApiClient
 from service.service import card, Week
 
@@ -47,6 +49,13 @@ async def anime_chosen(message: types.Message, state: FSMContext):
                      f'get_anime_day[{day.name}]')
         await message.answer('Что-то пошло не так!!!')
         return
+
+    # Запись статистики
+    await DataBaseClient().set_statistics(
+        message.from_user.id,
+        'schedules',
+        f'Получения расписания [{message.text.lower()}]'
+    )
 
     await message.answer(
         f"<b>{day.value.title()}</b>\n"

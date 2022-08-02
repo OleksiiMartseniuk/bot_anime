@@ -3,6 +3,8 @@ import logging
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 
+from database.db import DataBaseClient
+
 from service.api import ApiClient
 from service.service import card, get_page_list
 
@@ -32,6 +34,13 @@ async def result_search(message: types.Message, state: FSMContext):
                      f'[search({message.text.lower()})]')
         await state.finish()
         return
+
+    # Запись статистики
+    await DataBaseClient().set_statistics(
+        message.from_user.id,
+        'search',
+        f'Поиск по [{message.text.lower()}]'
+    )
 
     if data['count'] == 0:
         await message.answer('Нечего не найдено...')
