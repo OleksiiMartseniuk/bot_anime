@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    container_name: bot
+    command: python bot.py
+    volumes:
+      - .:/app
+    ports:
+      - "50:50"
+    env_file: .env
