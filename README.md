@@ -7,6 +7,9 @@ Bot - interaction with the service [django_service_anime](https://github.com/Ole
 * Receiving anons
 * Filter by genre
 
+#### Admin
+* Collection of user statistics
+
 #### Technology
 * Python => 3.10
 * Aiogram
