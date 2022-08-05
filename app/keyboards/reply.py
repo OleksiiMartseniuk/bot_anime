@@ -28,3 +28,11 @@ def get_schedules() -> ReplyKeyboardMarkup:
     for name in available_anime:
         keyboard.add(name)
     return keyboard
+
+
+def get_about() -> ReplyKeyboardMarkup:
+    """О боте"""
+    keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
+    keyboard.add('Отправить сообщения')
+    keyboard.add('Отмена')
+    return keyboard
