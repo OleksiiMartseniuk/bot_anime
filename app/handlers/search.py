@@ -73,7 +73,7 @@ async def pagination_search(message: types.Message, state: FSMContext):
             )
             for item in data['results']:
                 await message.answer_photo(
-                    item['url_image_preview_s'],
+                    item['url_image_preview'],
                     caption=card(item),
                     parse_mode=types.ParseMode.HTML
                 )

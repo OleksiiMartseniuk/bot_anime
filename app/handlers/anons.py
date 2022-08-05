@@ -36,7 +36,7 @@ async def anons_start(message: types.Message):
     )
     for item in data['results']:
         await message.answer_photo(
-            item['url_image_preview_s'],
+            item['url_image_preview'],
             caption=card(item),
             parse_mode=types.ParseMode.HTML
         )
