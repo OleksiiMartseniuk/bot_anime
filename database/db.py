@@ -32,3 +32,18 @@ class DataBaseClient:
         """
         await conn.execute(query, id_user, action, message, created)
         await conn.close()
+
+    async def set_message(
+            self,
+            id_user: int,
+            message: str,
+            created: datetime.datetime = datetime.datetime.now()
+    ):
+        """Сообщения пользователя"""
+        conn = await self._connect()
+        query = """
+                INSERT INTO anime_botcollbackmessage(id_user, message, created) 
+                VALUES($1, $2, $3)
+                """
+        await conn.execute(query, id_user, message, created)
+        await conn.close()
