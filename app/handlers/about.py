@@ -1,9 +1,12 @@
 import logging
+
 from aiogram import Dispatcher, types
+from aiogram.dispatcher import FSMContext
 
 from database.db import DataBaseClient
 
 from ..keyboards import reply
+from ..states.about import AboutMessage
 
 
 logger = logging.getLogger(__name__)
@@ -21,11 +24,34 @@ async def about_start(message: types.Message):
         'О боте'
     )
 
+    await AboutMessage.waiting_for_star_about.set()
     keyboard = reply.get_about()
-    await message.answer('Данный проект на этапе разработке.'
+    await message.answer('Данный проект на этапе разработке. '
                          'Если есть какие-то вопросы, пожелания напишите нам,'
-                         'ми будем очень благодарны.\n'
+                         ' ми будем очень благодарны.\n'
                          'Хорошего дня)', reply_markup=keyboard)
+
+
+async def write_message(message: types.Message, state: FSMContext):
+    """Проверка на выбор действия"""
+    if message.text.lower() != 'отправить сообщения':
+        await message.answer(
+            "Пожалуйста, выберите действия, используя клавиатуру ниже."
+        )
+        return
+    await message.answer(
+        'Введите текст сообщения....✍️',
+        reply_markup=types.ReplyKeyboardRemove()
+    )
+    await AboutMessage.next()
+
+
+async def send_message(message: types.Message, state: FSMContext):
+    """Запись сообщения в db"""
+    await DataBaseClient().set_message(message.from_user.id, message.text)
+    await message.answer('Сообщения отправлено 📬')
+    await message.answer('Спасибо за потраченное время !!!')
+    await state.finish()
 
 
 def register_handlers_about(dp: Dispatcher):
@@ -34,4 +60,11 @@ def register_handlers_about(dp: Dispatcher):
         commands="about",
         state="*"
     )
-
+    dp.register_message_handler(
+        write_message,
+        state=AboutMessage.waiting_for_star_about
+    )
+    dp.register_message_handler(
+        send_message,
+        state=AboutMessage.waiting_for_write_massage
+    )
