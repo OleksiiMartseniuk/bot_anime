@@ -10,6 +10,7 @@ from app.handlers.anons import register_handlers_anons
 from app.handlers.common import register_handlers_common
 from app.handlers.search import register_handlers_search
 from app.handlers.filter_genre import register_handlers_filter_genre
+from app.handlers.about import register_handlers_about
 
 from config.settings import TOKEN_BOT
 
@@ -44,6 +45,7 @@ async def main():
     register_handlers_anons(dp)
     register_handlers_search(dp)
     register_handlers_filter_genre(dp)
+    register_handlers_about(dp)
 
     await set_commands(bot)
 
