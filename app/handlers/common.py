@@ -10,7 +10,8 @@ async def cmd_start(message: types.Message, state: FSMContext):
         "Расписания (/schedules)\n"
         "Анонс (/anons)\n"
         "Поиск (/search)\n"
-        "Фильтр по жанрам (/filter_genre)\n",
+        "Фильтр по жанрам (/filter_genre)\n"
+        "О нас (/about)\n",
         reply_markup=types.ReplyKeyboardRemove()
     )
 
