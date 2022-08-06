@@ -36,7 +36,7 @@ async def anime_chosen(message: types.Message, state: FSMContext):
                 f'выбрал действия [{message.text.lower()}]')
 
     if message.text.lower() == reply.available_anime[0]:
-        day = list(Week)[datetime.weekday(datetime.now())]
+        day = list(Week)[datetime.weekday(message.date)]
         data = await ApiClient().get_anime_day(day.name)
     else:
         for day_week in Week:
