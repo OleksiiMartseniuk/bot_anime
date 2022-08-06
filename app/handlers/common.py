@@ -6,12 +6,13 @@ from aiogram.dispatcher.filters import Text
 async def cmd_start(message: types.Message, state: FSMContext):
     await state.finish()
     await message.answer(
-        "Выберите, действия:\n"
-        "Расписания (/schedules)\n"
-        "Анонс (/anons)\n"
-        "Поиск (/search)\n"
-        "Фильтр по жанрам (/filter_genre)\n"
-        "О нас (/about)\n",
+        "<b>Выберите действия</b>\n"
+        "/schedules - расписания\n"
+        "/anons - анонс\n"
+        "/search - поиск\n"
+        "/filter_genre - фильтр по жанрам\n"
+        "/about - о нас\n",
+        parse_mode=types.ParseMode.HTML,
         reply_markup=types.ReplyKeyboardRemove()
     )
 
