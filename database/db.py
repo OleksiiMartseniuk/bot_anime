@@ -37,13 +37,15 @@ class DataBaseClient:
             self,
             id_user: int,
             message: str,
+            read: bool = False,
             created: datetime.datetime = datetime.datetime.now()
     ):
         """Сообщения пользователя"""
         conn = await self._connect()
         query = """
-                INSERT INTO anime_botcollbackmessage(id_user, message, created) 
-                VALUES($1, $2, $3)
+                INSERT INTO anime_botcollbackmessage
+                (id_user, message, created, read) 
+                VALUES($1, $2, $3, $4)
                 """
-        await conn.execute(query, id_user, message, created)
+        await conn.execute(query, id_user, message, created, read)
         await conn.close()
