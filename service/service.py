@@ -1,4 +1,5 @@
 import math
+import re
 
 from typing import List
 
@@ -29,11 +30,21 @@ def card(data: dict, schedules: bool = False) -> str:
            f"{anons}" \
            f"{time}" \
            f"<b>Рейтинг</b> 📊 {data['rating']}\n" \
-           f"<b>Голоса</b> 🗳️ {data['votes']}\n" \
-           f"<a href='{data['link']}'>Смотреть на animevost.org</a>"
+           f"<b>Голоса</b> 🗳️ {data['votes']}\n\n" \
+           f"<a href='{data['link']}'>Смотреть на animevost.org</a>\n" \
+           f"<a href='{get_link_mirror(data['link'])}'>Зеркало v2.vost.pw</a>"
 
 
 def get_page_list(page_count: int) -> List[int]:
     """Получения списка страниц"""
     count = page_count / 20
     return [x for x in reversed(range(1, math.ceil(count) + 1))]
+
+
+def get_link_mirror(link: str) -> str | None:
+    """Генерация ссылки зеркала"""
+    if not link:
+        # Ссылки нет
+        return link
+    result = re.sub(r'/animevost.org/', '/v2.vost.pw/', link)
+    return result
