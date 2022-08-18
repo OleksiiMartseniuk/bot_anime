@@ -11,6 +11,7 @@ from app.handlers.common import register_handlers_common
 from app.handlers.search import register_handlers_search
 from app.handlers.filter_genre import register_handlers_filter_genre
 from app.handlers.about import register_handlers_about
+from app.handlers.timeline import register_handlers_timeline
 
 from config.settings import TOKEN_BOT
 
@@ -22,8 +23,9 @@ async def set_commands(bot: Bot):
     """Команды бота"""
     commands = [
         BotCommand(command="/schedules", description="Расписания"),
-        BotCommand(command="/search", description="Поиск"),
+        BotCommand(command="/timeline", description="Лента"),
         BotCommand(command="/anons", description="Анонс"),
+        BotCommand(command="/search", description="Поиск"),
         BotCommand(command="/filter_genre", description="Фильтр по жанрам"),
         BotCommand(command="/about", description="О нас"),
         BotCommand(command="/cancel", description="Отменить текущее действие")
@@ -47,6 +49,7 @@ async def main():
     register_handlers_search(dp)
     register_handlers_filter_genre(dp)
     register_handlers_about(dp)
+    register_handlers_timeline(dp)
 
     await set_commands(bot)
 
