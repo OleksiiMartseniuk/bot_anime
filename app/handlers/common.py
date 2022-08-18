@@ -8,6 +8,7 @@ async def cmd_start(message: types.Message, state: FSMContext):
     await message.answer(
         "<b>Выберите действия</b>\n"
         "/schedules - расписания\n"
+        "/timeline - лента\n"
         "/anons - анонс\n"
         "/search - поиск\n"
         "/filter_genre - фильтр по жанрам\n"
