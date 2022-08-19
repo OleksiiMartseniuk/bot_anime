@@ -29,7 +29,7 @@ async def start_timeline(message: types.Message):
         'Лента'
     )
 
-    for item in data['results']:
+    for item in data['results'][:10]:
         await message.answer_photo(
             item['url_image_preview'],
             caption=card(item),
