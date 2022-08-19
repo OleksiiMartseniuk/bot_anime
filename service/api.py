@@ -51,5 +51,4 @@ class ApiClient:
     async def get_indefinite_exit(self) -> dict | None:
         """Аниме с неопределенным сроком выхода"""
         params = {'indefinite_exit': True, 'ordering': '-updated'}
-        result = await self._get(self.api_url, params)
-        return result
+        return await self._get(self.api_url, params)
