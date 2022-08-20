@@ -10,10 +10,18 @@ class ApiClient:
     def __init__(self):
         self.api_url = API_URL
 
-    async def _get(self, url: str, params: dict = {}) -> dict | None:
+    async def _get(self, url: str, params: dict = {}, **kwargs) -> dict | None:
         async with httpx.AsyncClient() as client:
-            response = await client.get(url, params=params)
+            response = await client.get(url, params=params, **kwargs)
             if response.status_code == 200:
+                return response.json()
+            else:
+                 logger.error(f'[{url}] - statuscode[{response.status_code}]')
+
+    async def _post(self, url: str, data: dict, **kwargs) -> dict | None:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(url, data=data, **kwargs)
+            if response.status_code == 201:
                 return response.json()
             else:
                  logger.error(f'[{url}] - statuscode[{response.status_code}]')
