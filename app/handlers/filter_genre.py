@@ -3,8 +3,6 @@ import logging
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 
-from database.db import DataBaseClient
-
 from service.api import ApiClient
 from service.service import card, get_page_list
 
@@ -54,7 +52,7 @@ async def filter_genre_result(message: types.Message, state: FSMContext):
         return
 
     # Запись статистики
-    await DataBaseClient().set_statistics(
+    await ApiClient().sent_statistic(
         message.from_user.id,
         'filter_genre',
         f'Получения аниме по жанру [{message.text.lower()}]'

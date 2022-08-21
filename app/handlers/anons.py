@@ -2,8 +2,6 @@ import logging
 
 from aiogram import Dispatcher, types
 
-from database.db import DataBaseClient
-
 from service.api import ApiClient
 from service.service import card
 
@@ -24,7 +22,7 @@ async def anons_start(message: types.Message):
         return
 
     # Запись статистики
-    await DataBaseClient().set_statistics(
+    await ApiClient().sent_statistic(
         message.from_user.id,
         'anons',
         'Получения анонсов'

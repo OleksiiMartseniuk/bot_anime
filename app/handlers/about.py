@@ -3,7 +3,7 @@ import logging
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 
-from database.db import DataBaseClient
+from service.api import ApiClient
 
 from ..keyboards import reply
 from ..states.about import AboutMessage
@@ -18,7 +18,7 @@ async def about_start(message: types.Message):
                 f'выбрал действия [about]')
 
     # Запись статистики
-    await DataBaseClient().set_statistics(
+    await ApiClient().sent_statistic(
         message.from_user.id,
         'about',
         'О боте'
@@ -48,7 +48,7 @@ async def write_message(message: types.Message, state: FSMContext):
 
 async def send_message(message: types.Message, state: FSMContext):
     """Запись сообщения в db"""
-    await DataBaseClient().set_message(message.from_user.id, message.text)
+    await ApiClient().sent_message(message.from_user.id, message.text)
     await message.answer('Сообщения отправлено 📬')
     await message.answer('Спасибо за потраченное время !!!')
     await state.finish()
