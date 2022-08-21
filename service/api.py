@@ -1,7 +1,7 @@
 import httpx
 import logging
 
-from config.settings import API_URL
+from config.settings import API_URL, API_KEY
 
 logger = logging.getLogger(__name__)
 
@@ -28,35 +28,71 @@ class ApiClient:
 
     async def get_anons(self) -> dict | None:
         """Получения анонсов"""
+        url = self.api_url + 'anime/'
         params = {'anons': 'True'}
-        return await self._get(self.api_url, params)
+        return await self._get(url, params)
 
     async def get_anime_day(self, day: str) -> dict | None:
         """Получения аниме по дню недели"""
+        url = self.api_url + 'anime/'
         params = {'day_week': day}
-        return await self._get(self.api_url, params)
+        return await self._get(url, params)
 
     async def get_genre(self) -> list | None:
         """Жанры"""
-        url = self.api_url + 'genre/'
+        url = self.api_url + 'anime/genre/'
         return await self._get(url)
 
     async def get_filter_genre(self, title: str, page: int = 1) -> dict | None:
         """Фильтр по жанрам"""
+        url = self.api_url + 'anime/'
         params = {'genre': title, 'page': page}
-        return await self._get(self.api_url, params)
+        return await self._get(url, params)
 
     async def get_count_anime(self) -> int | None:
         """Количество аниме"""
-        result = await self._get(self.api_url)
+        url = self.api_url + 'anime/'
+        result = await self._get(url)
         return result.get('count')
 
     async def search(self, q: str, page: int = 1) -> dict | None:
         """Поиск по названию"""
+        url = self.api_url + 'anime/'
         params = {'search': q, 'page': page}
-        return await self._get(self.api_url, params)
+        return await self._get(url, params)
 
     async def get_indefinite_exit(self) -> dict | None:
         """Аниме с неопределенным сроком выхода"""
+        url = self.api_url + 'anime/'
         params = {'indefinite_exit': True, 'ordering': '-updated'}
-        return await self._get(self.api_url, params)
+        return await self._get(url, params)
+
+    async def sent_statistic(
+            self,
+            id_user: int,
+            action: str,
+            message: str
+    ) -> dict | None:
+        """Запись статистики"""
+        url = self.api_url + 'bot/statistic/'
+        headers = {'Authorization': f'Token {API_KEY}'}
+        data = {
+            'id_user': id_user,
+            'action': action,
+            'message': message
+        }
+        return await self._post(url, data, headers=headers)
+
+    async def sent_message(
+            self,
+            id_user: int,
+            message: str
+    ) -> dict | None:
+        """Отправка сообщения пользователя"""
+        url = self.api_url + 'bot/massage/'
+        headers = {'Authorization': f'Token {API_KEY}'}
+        data = {
+            'id_user': id_user,
+            'message': message
+        }
+        return await self._post(url, data, headers=headers)
