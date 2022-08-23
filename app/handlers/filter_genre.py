@@ -4,7 +4,7 @@ from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 
 from service.api import ApiClient
-from service.service import card, get_page_list
+from service.service import card, get_page_list, get_image
 
 from ..keyboards import reply
 from ..states.filter_genre import FilterGenre
@@ -85,8 +85,12 @@ async def pagination_filter(message: types.Message, state: FSMContext):
                 user_data['page_list'][-1]
             )
             for item in data['results']:
-                await message.answer_photo(
+                img = get_image(
                     item['url_image_preview'],
+                    item['telegram_id_file']
+                )
+                await message.answer_photo(
+                    img,
                     caption=card(item),
                     parse_mode=types.ParseMode.HTML
                 )

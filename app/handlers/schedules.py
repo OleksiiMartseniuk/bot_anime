@@ -6,7 +6,7 @@ from aiogram.dispatcher import FSMContext
 from datetime import datetime
 
 from service.api import ApiClient
-from service.service import card, Week
+from service.service import card, Week, get_image
 
 from ..states.schedules import WeekDay
 from ..keyboards import reply
@@ -61,8 +61,9 @@ async def anime_chosen(message: types.Message, state: FSMContext):
         parse_mode=types.ParseMode.HTML
     )
     for item in data['results']:
+        img = get_image(item['url_image_preview'], item['telegram_id_file'])
         await message.answer_photo(
-            item['url_image_preview'],
+            img,
             caption=card(item, schedules=True),
             reply_markup=types.ReplyKeyboardRemove(),
             parse_mode=types.ParseMode.HTML
