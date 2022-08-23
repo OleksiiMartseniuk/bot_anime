@@ -16,6 +16,9 @@ Bot - interaction with the service [django_service_anime](https://github.com/Ole
 * Aiogram
 * Httpx
 
+#### Test
+`docker exec -it bot bash`
+* Pytest `pytest tests`
 #### Instructions
 
 Create a file at the root of the project `.env`
@@ -24,11 +27,9 @@ Create a file at the root of the project `.env`
 # Bot
 export TOKEN_BOT='you_token'
 
-# Data Base 
-# Settings django_anime_service database
-export POSTGRES_DB
-export POSTGRES_USER
-export POSTGRES_PASSWORD
-export HOST_DB
-export PORT_DB
+# TimeZone
+export TZ='you_time_zone'
+
+# Api
+export API_KEY='you_api_key'
 ```
