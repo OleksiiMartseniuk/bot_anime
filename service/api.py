@@ -89,7 +89,7 @@ class ApiClient:
             message: str
     ) -> dict | None:
         """Отправка сообщения пользователя"""
-        url = self.api_url + 'bot/massage/'
+        url = self.api_url + 'bot/message/'
         headers = {'Authorization': f'Token {API_KEY}'}
         data = {
             'id_user': id_user,
