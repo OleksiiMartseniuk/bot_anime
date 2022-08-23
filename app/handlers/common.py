@@ -2,6 +2,8 @@ from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 
+from service.api import ApiClient
+
 
 async def cmd_start(message: types.Message, state: FSMContext):
     await state.finish()
@@ -15,6 +17,12 @@ async def cmd_start(message: types.Message, state: FSMContext):
         "/about - о нас\n",
         parse_mode=types.ParseMode.HTML,
         reply_markup=types.ReplyKeyboardRemove()
+    )
+    # Запись статистики
+    await ApiClient().sent_statistic(
+        message.from_user.id,
+        'start',
+        'Начало роботы'
     )
 
 
