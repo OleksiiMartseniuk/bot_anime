@@ -76,6 +76,12 @@ async def filter_genre_result(message: types.Message, state: FSMContext):
 
 async def pagination_filter(message: types.Message, state: FSMContext):
     """Пагинация по страницам"""
+    if message.text.lower() != 'показать страницу':
+        await message.answer(
+            "Пожалуйста, выберите действия, используя клавиатуру ниже."
+        )
+        return
+
     if message.text.lower() == 'показать страницу':
         user_data = await state.get_data()
 
