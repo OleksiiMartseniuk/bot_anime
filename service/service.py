@@ -48,3 +48,8 @@ def get_link_mirror(link: str) -> str | None:
         return link
     result = re.sub(r'/animevost.org/', '/v2.vost.pw/', link)
     return result
+
+
+def get_image(url_image_preview: str, telegram_id_file: str | None) -> str:
+    """Получения доступной картинки"""
+    return telegram_id_file if telegram_id_file else url_image_preview
