@@ -3,6 +3,7 @@ Bot - interaction with the service [django_service_anime](https://github.com/Ole
 
 #### Actions
 * Receiving schedules
+* Timeline
 * Search by name
 * Receiving anons
 * Filter by genre
