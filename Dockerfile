@@ -1,7 +1,7 @@
 FROM python:3.10.4-slim
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends build-essential libpq-dev nano
+    apt-get install -y --no-install-recommends build-essential
 
 WORKDIR /app
 
