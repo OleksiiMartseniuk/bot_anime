@@ -46,6 +46,7 @@ async def anime_chosen(message: types.Message, state: FSMContext):
         logger.error(f'Данные с сервера неверны запрос '
                      f'get_anime_day[{day.name}]')
         await message.answer('Что-то пошло не так!!!')
+        await state.finish()
         return
 
     # Запись статистики
