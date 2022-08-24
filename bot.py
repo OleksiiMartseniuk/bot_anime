@@ -35,7 +35,7 @@ async def set_commands(bot: Bot):
 
 async def main():
     logging.basicConfig(
-        level=logging.INFO,
+        level=logging.WARNING,
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
     )
     logger.error("Starting bot")
