@@ -75,6 +75,13 @@ async def pagination_search(message: types.Message, state: FSMContext):
                 user_data['search'],
                 user_data['page_list'][-1]
             )
+
+            if not data:
+                await message.answer('Что-то пошло не так!!!')
+                await state.finish()
+                logger.error('Данные с сервера неверны переменная data пустая')
+                return
+
             for item in data['results']:
                 img = get_image(
                     item['url_image_preview'],

@@ -33,6 +33,13 @@ async def filter_genre_start(message: types.Message):
 async def filter_genre_result(message: types.Message, state: FSMContext):
     """Получения результата фильтра"""
     data_genre = await ApiClient().get_genre()
+
+    if not data_genre:
+        await message.answer('Что-то пошло не так!!!')
+        await state.finish()
+        logger.error('Данные с сервера неверны переменная data_genre пустая')
+        return
+
     if message.text.lower() not in [item['title'] for item in data_genre]:
         await message.answer(
             "Пожалуйста, выберите жанр, используя клавиатуру ниже."
@@ -90,6 +97,11 @@ async def pagination_filter(message: types.Message, state: FSMContext):
                 user_data['genre'],
                 user_data['page_list'][-1]
             )
+            if not data:
+                await message.answer('Что-то пошло не так!!!')
+                await state.finish()
+                logger.error('Данные с сервера неверны переменная data пустая')
+                return
             for item in data['results']:
                 img = get_image(
                     item['url_image_preview'],

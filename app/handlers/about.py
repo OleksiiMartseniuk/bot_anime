@@ -48,7 +48,12 @@ async def write_message(message: types.Message, state: FSMContext):
 
 async def send_message(message: types.Message, state: FSMContext):
     """Запись сообщения в db"""
-    await ApiClient().sent_message(message.from_user.id, message.text)
+    result = await ApiClient().sent_message(message.from_user.id, message.text)
+    if not result:
+        await message.answer('Что-то пошло не так!!!')
+        logger.error('Переменная result пуста')
+        await state.finish()
+        return
     await message.answer('Сообщения отправлено 📬')
     await message.answer('Спасибо за потраченное время !!!')
     await state.finish()
