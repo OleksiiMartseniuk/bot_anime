@@ -1,8 +1,12 @@
+import logging
+
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 
 from service.api import ApiClient
+
+logger = logging.getLogger(__name__)
 
 
 async def cmd_start(message: types.Message, state: FSMContext):
@@ -24,6 +28,8 @@ async def cmd_start(message: types.Message, state: FSMContext):
         'start',
         'Начало роботы'
     )
+    logger.info(f'Пользователь [{message.from_user.id}] '
+                f'выбрал действия [start]')
 
 
 async def cmd_cancel(message: types.Message, state: FSMContext):
@@ -32,6 +38,8 @@ async def cmd_cancel(message: types.Message, state: FSMContext):
         "Действие отменено",
         reply_markup=types.ReplyKeyboardRemove()
     )
+    logger.info(f'Пользователь [{message.from_user.id}] '
+                f'выбрал действия [cancel]')
 
 
 def register_handlers_common(dp: Dispatcher):
