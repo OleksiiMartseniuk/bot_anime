@@ -17,8 +17,8 @@ class ApiClient:
                 if response.status_code == 200:
                     return response.json()
                 else:
-                     logger.error(f'[{url}] - statuscode'
-                                  f'[{response.status_code}]')
+                    logger.error(f'[{url}] - statuscode'
+                                 f'[{response.status_code}]')
         except httpx.RequestError as exc:
             logger.error(f'Исключения {exc.__class__} [{str(exc)}]')
 
@@ -29,8 +29,8 @@ class ApiClient:
                 if response.status_code == 201:
                     return response.json()
                 else:
-                     logger.error(f'[{url}] - statuscode'
-                                  f'[{response.status_code}]')
+                    logger.error(f'[{url}] - statuscode'
+                                 f'[{response.status_code}]')
         except httpx.RequestError as exc:
             logger.error(f'Исключения {exc.__class__} [{str(exc)}]')
 
