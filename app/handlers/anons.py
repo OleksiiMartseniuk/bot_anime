@@ -17,7 +17,7 @@ async def anons_start(message: types.Message):
                 f'выбрал действия [анонс]')
 
     if not data:
-        logger.error(f'Данные с сервера неверны запрос [get_anons]')
+        logger.error('Данные с сервера неверны запрос [get_anons]')
         await message.answer('Что-то пошло не так!!!')
         return
 

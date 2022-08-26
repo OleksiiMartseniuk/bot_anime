@@ -16,7 +16,7 @@ async def start_timeline(message: types.Message):
                 f'выбрал действия [timeline]')
 
     if not data:
-        logger.error(f'Данные с сервера неверны запрос [get_indefinite_exit]')
+        logger.error('Данные с сервера неверны запрос [get_indefinite_exit]')
         await message.answer('Что-то пошло не так!!!')
         return
 

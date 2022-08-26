@@ -22,7 +22,7 @@ async def filter_genre_start(message: types.Message):
             'Что-то пошло не так!!!',
             reply_markup=types.ReplyKeyboardRemove()
         )
-        logger.error(f'Данные с сервера неверны запрос [get_genre]')
+        logger.error('Данные с сервера неверны запрос [get_genre]')
         return
 
     keyboard = reply.get_genre(data)

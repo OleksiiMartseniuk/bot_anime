@@ -25,7 +25,7 @@ def card(data: dict, schedules: bool = False) -> str:
     else:
         date_time = 'В течении дня'
     time = f'<b>Время выхода</b> 🕜️ ({date_time}) \n' if schedules else ''
-    anons = f'<b>Анонс</b> ✅ \n' if data['anons'] else ''
+    anons = '<b>Анонс</b> ✅ \n' if data['anons'] else ''
     return f"<b>{data['title'].split('/')[0]}</b> \n\n" \
            f"{anons}" \
            f"{time}" \
