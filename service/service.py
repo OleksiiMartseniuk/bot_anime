@@ -20,12 +20,17 @@ class Week(Enum):
 def card(data: dict, schedules: bool = False) -> str:
     """Вывод аниме"""
     if data['timer']:
+        # добавить передачу timetz
         date_time = datetime.fromtimestamp(data['timer'])
         date_time = date_time.strftime('%H:%M')
     else:
         date_time = 'В течении дня'
     time = f'<b>Время выхода</b> 🕜️ ({date_time}) \n' if schedules else ''
-    anons = '<b>Анонс</b> ✅ \n' if data['anons'] else ''
+    date = re.findall(r'\d+\s\w+\s-\s\d+\s\w+', data['title'])
+    date_string = 'Не определена'
+    if date:
+        date_string = f'<b>Дата выхода</b> 📅 {date[0]}'
+    anons = f'<b>Анонс</b> ✅ \n{date_string} \n' if data['anons'] else ''
     return f"<b>{data['title'].split('/')[0]}</b> \n\n" \
            f"{anons}" \
            f"{time}" \
