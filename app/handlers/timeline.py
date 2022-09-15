@@ -28,7 +28,7 @@ async def start_timeline(message: types.Message):
     )
 
     await message.answer('Лента')
-    for item in data['results'][:10]:
+    for item in data['results'][:10][::-1]:
         img = get_image(item['url_image_preview'], item['telegram_id_file'])
         await message.answer_photo(
             img,
