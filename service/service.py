@@ -26,10 +26,10 @@ def card(data: dict, schedules: bool = False) -> str:
     else:
         date_time = 'В течении дня'
     time = f'<b>Время выхода</b> 🕜️ ({date_time}) \n' if schedules else ''
-    date = re.findall(r'\d+\s\w+\s-\s\d+\s\w+', data['title'])
+    date = re.findall(r'\s\d+\s\w+', data['title'])
     date_string = 'Не определена'
     if date:
-        date_string = f'<b>Дата выхода</b> 📅 {date[0]}'
+        date_string = f'<b>Дата выхода</b> 📅 {date[0].strip()}'
     anons = f'<b>Анонс</b> ✅ \n{date_string} \n' if data['anons'] else ''
     return f"<b>{data['title'].split('/')[0]}</b> \n\n" \
            f"{anons}" \
