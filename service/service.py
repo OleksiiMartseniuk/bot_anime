@@ -1,6 +1,5 @@
 import math
 import re
-import pytz
 
 from typing import List
 
@@ -21,7 +20,7 @@ class Week(Enum):
 def card(data: dict, schedules: bool = False) -> str:
     """Вывод аниме"""
     if data['timer']:
-        date_time = datetime.fromtimestamp(data['timer'], pytz.utc)
+        date_time = datetime.fromtimestamp(data['timer'])
         date_time = date_time.strftime('%H:%M')
     else:
         date_time = 'В течении дня'
