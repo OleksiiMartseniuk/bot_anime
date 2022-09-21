@@ -98,3 +98,13 @@ def get_anime_anilibria(item: dict) -> schemas.AnimeAniLibria | None:
         return
 
     return anime
+
+
+def cart_anilibria(anime: schemas.AnimeAniLibria) -> str:
+    """Вывод аниме anilibria"""
+    time = datetime.utcfromtimestamp(anime.updated)
+    time = time.strftime('%m/%d/%Y %H:%M')
+    return f"<b>{anime.names.ru}</b> \n\n" \
+           f"<b>Жанр</b>: {' '.join(anime.genres)}\n" \
+           f"<b>Обновлен</b> 🕜️ {time} \n" \
+           f"<b>Описания</b> 📔: {anime.description}"
