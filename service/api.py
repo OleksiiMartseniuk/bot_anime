@@ -50,10 +50,7 @@ class ApiClient(ClientBase):
         return await self.get(url, params)
 
     async def sent_statistic(
-            self,
-            id_user: int,
-            action: str,
-            message: str
+            self, id_user: int, action: str, message: str
     ) -> dict | None:
         """Запись статистики"""
         url = self.api_url + 'bot/statistic/'
@@ -66,9 +63,7 @@ class ApiClient(ClientBase):
         return await self.post(url, data, headers=headers)
 
     async def sent_message(
-            self,
-            id_user: int,
-            message: str
+            self, id_user: int, message: str
     ) -> dict | None:
         """Отправка сообщения пользователя"""
         url = self.api_url + 'bot/message/'
@@ -76,5 +71,58 @@ class ApiClient(ClientBase):
         data = {
             'id_user': id_user,
             'message': message
+        }
+        return await self.post(url, data, headers=headers)
+
+    async def create_user(
+        self, username: str, user_id: int, chat_id: int
+    ) -> dict | None:
+        """Создания пользователя"""
+        url = self.api_url + 'bot/create-user/'
+        headers = {'Authorization': f'Token {API_KEY}'}
+        data = {
+            'username': username,
+            'user_id': user_id,
+            'chat_id': chat_id
+        }
+        return await self.post(url, data, headers=headers)
+
+    async def get_anime_track(
+        self, user_id: int, subscriber: bool
+    ) -> list | None:
+        """Вывод аниме с отслеживание пользователя
+        Parameters:
+            subscriber (bool) - True: Получения список подписок
+            subscriber (bool) - False: Получения список возможных подписок
+        """
+        url = self.api_url + 'bot/get-anime/'
+        headers = {'Authorization': f'Token {API_KEY}'}
+        params = {
+            'user_id': user_id,
+            'subscriber': subscriber
+        }
+        return await self.get(url, params, headers=headers)
+
+    async def add_anime_track(
+        self, anime_ids: list[int], user_id: int
+    ) -> dict | None:
+        """Добавить аниме в отслеживаемые пользователем"""
+        url = self.api_url + 'bot/add-anime/'
+        headers = {'Authorization': f'Token {API_KEY}'}
+        data = {
+            'anime_ids': anime_ids,
+            'user_id': user_id
+        }
+        return await self.post(url, data, headers=headers)
+
+    async def remove_anime_track(
+        self, anime_ids: list[int], user_id: int
+    ) -> dict | None:
+        """Удаления аниме с отслеживаемые пользователем"""
+        url = self.api_url + 'bot/remove-anime/'
+        headers = {'Authorization': f'Token {API_KEY}'}
+        data = {
+            'anime_ids': anime_ids,
+            'user_id': user_id
         }
         return await self.post(url, data, headers=headers)
