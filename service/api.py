@@ -95,13 +95,9 @@ class ApiClient(ClientBase):
             subscriber (bool) - True: Получения список подписок
             subscriber (bool) - False: Получения список возможных подписок
         """
-        url = self.api_url + 'bot/get-anime/'
+        url = self.api_url + f'bot/get-anime/{user_id}/{subscriber}/'
         headers = {'Authorization': f'Token {API_KEY}'}
-        params = {
-            'user_id': user_id,
-            'subscriber': subscriber
-        }
-        return await self.get(url, params, headers=headers)
+        return await self.get(url, headers=headers)
 
     async def add_anime_track(
         self, anime_ids: list[int], user_id: int
