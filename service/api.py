@@ -122,3 +122,10 @@ class ApiClient(ClientBase):
             'user_id': user_id
         }
         return await self.post(url, data, headers=headers)
+
+    async def get_user(self, user_id: int) -> list | None:
+        """Получения пользователей"""
+        url = self.api_url + 'bot/user-bot/'
+        headers = {'Authorization': f'Token {API_KEY}'}
+        params = {'user_id': user_id}
+        return await self.get(url, params, headers=headers)
