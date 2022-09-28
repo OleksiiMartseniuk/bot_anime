@@ -26,7 +26,7 @@ def get_schedules() -> ReplyKeyboardMarkup:
     """Расписания"""
     keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
     for name in available_anime:
-        keyboard.add(name)
+        keyboard.add(name.capitalize())
     return keyboard
 
 
