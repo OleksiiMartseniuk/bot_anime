@@ -1,4 +1,4 @@
-# Telegram bot 
+# Telegram bot
 Bot - interaction with the service [django_service_anime](https://github.com/OleksiiMartseniuk/django_service_anime)
 
 #### Actions
@@ -7,6 +7,9 @@ Bot - interaction with the service [django_service_anime](https://github.com/Ole
 * Search by name
 * Receiving anons
 * Filter by genre
+* Menu Profile
+    * Register user
+    * Subscribe anime
 
 #### Admin
 * Collection of user statistics
@@ -33,3 +36,7 @@ export TZ='you_time_zone'
 # Api
 export API_KEY='you_api_key'
 ```
+
+Build the image and run the container
+
+`docker-compose up --build`
