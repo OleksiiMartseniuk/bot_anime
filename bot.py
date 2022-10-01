@@ -12,6 +12,7 @@ from app.handlers.search import register_handlers_search
 from app.handlers.filter_genre import register_handlers_filter_genre
 from app.handlers.about import register_handlers_about
 from app.handlers.timeline import register_handlers_timeline
+from app.handlers.profile import register_handlers_profile
 
 from config.settings import TOKEN_BOT
 
@@ -22,6 +23,7 @@ logger = logging.getLogger(__name__)
 async def set_commands(bot: Bot):
     """Команды бота"""
     commands = [
+        BotCommand(command="/profile", description="Профиль"),
         BotCommand(command="/schedules", description="Расписания"),
         BotCommand(command="/timeline", description="Лента"),
         BotCommand(command="/anons", description="Анонс"),
@@ -50,6 +52,7 @@ async def main():
     register_handlers_filter_genre(dp)
     register_handlers_about(dp)
     register_handlers_timeline(dp)
+    register_handlers_profile(dp)
 
     await set_commands(bot)
 
