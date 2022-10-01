@@ -13,6 +13,7 @@ async def cmd_start(message: types.Message, state: FSMContext):
     await state.finish()
     await message.answer(
         "<b>Выберите действия</b>\n"
+        "/profile - Профиль\n"
         "/schedules - расписания\n"
         "/timeline - лента\n"
         "/anons - анонс\n"
@@ -22,6 +23,15 @@ async def cmd_start(message: types.Message, state: FSMContext):
         parse_mode=types.ParseMode.HTML,
         reply_markup=types.ReplyKeyboardRemove()
     )
+    # Проверка на существующего пользователя
+    user = await ApiClient().get_user(message.from_user.id)
+    if not user:
+        # Регистрация пользователя
+        await ApiClient().create_user(
+            message.from_user.username,
+            message.from_user.id,
+            message.chat.id
+        )
     # Запись статистики
     await ApiClient().sent_statistic(
         message.from_user.id,
