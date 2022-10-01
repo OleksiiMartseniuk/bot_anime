@@ -8,6 +8,11 @@ class ApiClient(ClientBase):
     def __init__(self):
         self.api_url = API_URL
 
+    async def get_anime(self, id: int) -> dict | None:
+        """Получения аниме"""
+        url = self.api_url + f'anime/{id}/'
+        return await self.get(url)
+
     async def get_anons(self) -> dict | None:
         """Получения анонсов"""
         url = self.api_url + 'anime/'
