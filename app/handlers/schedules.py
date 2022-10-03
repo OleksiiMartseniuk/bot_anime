@@ -59,7 +59,8 @@ async def anime_chosen(message: types.Message, state: FSMContext):
     await message.answer(
         f"<b>{day.value.title()}</b>\n"
         f"<b>Количество</b>: \t {data['count']} аниме",
-        parse_mode=types.ParseMode.HTML
+        parse_mode=types.ParseMode.HTML,
+        reply_markup=types.ReplyKeyboardRemove()
     )
     for item in data['results']:
         img = get_image(item['url_image_preview'], item['telegram_id_file'])
