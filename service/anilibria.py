@@ -20,8 +20,8 @@ class AniLibriaClient(ClientBase):
             return None
         return await self.get(url=url, params=params)
 
-    async def get_anime_gay(self, day: int) -> list[dict] | None:
+    async def get_schedule(self, days: list[int]) -> list[dict] | None:
         """Получить список аниме по дню"""
         url = self.url_api + 'getSchedule'
-        params = {'days': day}
+        params = {'days': ','.join(map(str, days))}
         return await self.get(url=url, params=params)
