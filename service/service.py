@@ -2,7 +2,6 @@ import math
 import re
 import logging
 
-from pydantic import ValidationError
 from enum import Enum
 from datetime import datetime
 
