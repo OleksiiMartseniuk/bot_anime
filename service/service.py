@@ -6,8 +6,6 @@ from pydantic import ValidationError
 from enum import Enum
 from datetime import datetime
 
-from . import schemas
-
 
 logger = logging.getLogger(__name__)
 
@@ -62,49 +60,3 @@ def get_link_mirror(link: str) -> str | None:
 def get_image(url_image_preview: str, telegram_id_file: str | None) -> str:
     """Получения доступной картинки"""
     return telegram_id_file if telegram_id_file else url_image_preview
-
-
-def get_anime_anilibria(item: dict) -> schemas.AnimeAniLibria | None:
-    """Получения схемы AnimeAniLibria"""
-    try:
-        names = schemas.Names(
-            ru=item.get('names').get('ru'),
-            en=item.get('names').get('en')
-        )
-        posters = schemas.Posters(
-            small=item.get('posters').get('small').get('url'),
-            medium=item.get('posters').get('medium').get('url'),
-            original=item.get('posters').get('original').get('url')
-        )
-        type = schemas.PType(
-            full_string=item.get('type').get('full_string'),
-            string=item.get('type').get('string'),
-            series=item.get('type').get('series'),
-            length=item.get('type').get('length')
-        )
-        anime = schemas.AnimeAniLibria(
-            id=item.get('id'),
-            code=item.get('code'),
-            names=names,
-            posters=posters,
-            updated=item.get('updated'),
-            last_change=item.get('last_change'),
-            type=type,
-            genres=item.get('genres'),
-            description=item.get('description'),
-        )
-    except ValidationError as e:
-        logger.error(e)
-        return
-
-    return anime
-
-
-def cart_anilibria(anime: schemas.AnimeAniLibria) -> str:
-    """Вывод аниме anilibria"""
-    time = datetime.utcfromtimestamp(anime.updated)
-    time = time.strftime('%m/%d/%Y %H:%M')
-    return f"<b>{anime.names.ru}</b> \n\n" \
-           f"<b>Жанр</b>: {' '.join(anime.genres)}\n" \
-           f"<b>Обновлен</b> 🕜️ {time} \n" \
-           f"<b>Описания</b> 📔: {anime.description}"
