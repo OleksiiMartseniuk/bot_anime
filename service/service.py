@@ -28,6 +28,10 @@ def card(data: dict, schedules: bool = False) -> str:
         date_time = date_time.strftime('%H:%M')
     else:
         date_time = 'В течении дня'
+    day_name = data.get('day_week')
+    if day_name:
+        week_day_name = f'<b>День недели</b> 📅 {Week[day_name].value} \n'
+    day = week_day_name if day_name else ''
     time = f'<b>Время выхода</b> 🕜️ ({date_time}) \n' if schedules else ''
     date = re.findall(r'\s\d+\s\w+', data['title'])
     date_string = 'Не определена'
@@ -36,6 +40,7 @@ def card(data: dict, schedules: bool = False) -> str:
     anons = f'<b>Анонс</b> ✅ \n{date_string} \n' if data['anons'] else ''
     return f"<b>{data['title'].split('/')[0]}</b> \n\n" \
            f"{anons}" \
+           f"{day}" \
            f"{time}" \
            f"<b>Рейтинг</b> 📊 {data['rating']}\n" \
            f"<b>Голоса</b> 🗳️ {data['votes']}\n\n" \
