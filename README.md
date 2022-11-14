@@ -47,6 +47,7 @@ export TZ='you_time_zone'
 
 # Api
 export API_KEY='you_api_key'
+export HOST_API='host_django_service_anime'
 ```
 
 Build the image and run the container
