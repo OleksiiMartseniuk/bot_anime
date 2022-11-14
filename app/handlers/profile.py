@@ -3,7 +3,7 @@ import logging
 from aiogram import Dispatcher, types
 
 from service.api import ApiClient
-from service.service import card
+from service.service import card, user_registration
 
 from ..keyboards.inline import menu_profile
 
@@ -13,6 +13,12 @@ logger = logging.getLogger(__name__)
 
 async def profile_menu(message: types.Message):
     """Меню"""
+    # Регистрация пользователя
+    await user_registration(
+        message.from_user.username,
+        message.from_user.id,
+        message.chat.id
+    )
     await list_categories(message)
 
 

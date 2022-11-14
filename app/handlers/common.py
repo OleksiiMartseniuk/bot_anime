@@ -5,6 +5,8 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 
 from service.api import ApiClient
+from service.service import user_registration
+
 
 logger = logging.getLogger(__name__)
 
@@ -23,15 +25,12 @@ async def cmd_start(message: types.Message, state: FSMContext):
         parse_mode=types.ParseMode.HTML,
         reply_markup=types.ReplyKeyboardRemove()
     )
-    # Проверка на существующего пользователя
-    user = await ApiClient().get_user(message.from_user.id)
-    if not user:
-        # Регистрация пользователя
-        await ApiClient().create_user(
-            message.from_user.username,
-            message.from_user.id,
-            message.chat.id
-        )
+    # Регистрация пользователя
+    await user_registration(
+        message.from_user.username,
+        message.from_user.id,
+        message.chat.id
+    )
     # Запись статистики
     await ApiClient().sent_statistic(
         message.from_user.id,
