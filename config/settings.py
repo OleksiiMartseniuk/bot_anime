@@ -3,5 +3,6 @@ import os
 
 TOKEN_BOT = os.getenv('TOKEN_BOT')
 
-API_URL = 'http://0.0.0.0/api/v1/'
+HOST_API = os.getenv('HOST_API')
+API_URL = f'http://{HOST_API}/api/v1/'
 API_KEY = os.getenv('API_KEY')
