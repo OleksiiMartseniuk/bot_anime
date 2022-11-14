@@ -5,6 +5,8 @@ import logging
 from enum import Enum
 from datetime import datetime
 
+from .api import ApiClient
+
 
 logger = logging.getLogger(__name__)
 
@@ -59,3 +61,12 @@ def get_link_mirror(link: str) -> str | None:
 def get_image(url_image_preview: str, telegram_id_file: str | None) -> str:
     """Получения доступной картинки"""
     return telegram_id_file if telegram_id_file else url_image_preview
+
+
+async def user_registration(username: str, user_id: int, chat_id: int) -> None:
+    """Регистрация пользователя"""
+    # Проверка на существующего пользователя
+    user = await ApiClient().get_user(user_id)
+    if not user:
+        # Регистрация пользователя
+        await ApiClient().create_user(username, user_id, chat_id)
