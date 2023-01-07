@@ -1,7 +1,4 @@
-FROM python:3.10.4-slim
-
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends build-essential
+FROM python:3.10.9-alpine3.16
 
 WORKDIR /app
 
