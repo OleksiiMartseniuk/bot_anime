@@ -40,14 +40,14 @@ Create a file at the root of the project `.env`
 
 ```
 # Bot
-export TOKEN_BOT='you_token'
+TOKEN_BOT='you_token'
 
 # TimeZone
-export TZ='you_time_zone'
+TZ='you_time_zone'
 
 # Api
-export API_KEY='you_api_key'
-export HOST_API='host_django_service_anime'
+API_KEY='you_api_key'
+HOST_API='host_django_service_anime'
 ```
 
 Build the image and run the container
